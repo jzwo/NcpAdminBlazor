@@ -3,6 +3,7 @@ using MudBlazor.Services;
 using NcpAdminBlazor.Client.Extensions;
 using NcpAdminBlazor.Web.Components;
 using NcpAdminBlazor.Web.MockApi;
+using NcpAdminBlazor.Client.HttpClientServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,8 @@ builder.Services.AddScoped<HttpClient>(sp =>
     return factory.CreateClient("ApiService");
 });
 
+builder.Services.AddScoped<AiChatService>(sp => new AiChatService(sp.GetRequiredService<HttpClient>()));
+
 // 注册 Mock 数据存储（仅在 Demo 模式下使用）
 if (demoModeEnabled)
 {
@@ -56,6 +59,35 @@ builder.Services.AddOutputCache();
 
 builder.Services.AddHttpForwarder();
 builder.Services.AddHttpContextAccessor();
+
+// // OpenAI Configuration
+// if (builder.Configuration["OpenAI:Key"] is { } openAiKey) 
+// {
+//     var openAIClient = new OpenAI.OpenAIClient(
+//         new System.ClientModel.ApiKeyCredential(openAiKey), 
+//         new OpenAI.OpenAIClientOptions
+//         {
+//             Endpoint = builder.Configuration["OpenAI:Endpoint"] is string endpoint ? new Uri(endpoint) : null
+//         });
+//
+// #pragma warning disable OPENAI001 // GetOpenAIResponseClient(string) is experimental and subject to change or removal in future updates.
+//     var chatClient = openAIClient.GetOpenAIResponseClient("ep-20251230124203-vccgb").AsIChatClient();
+// #pragma warning restore OPENAI001
+//
+//     var embeddingGenerator = openAIClient.GetEmbeddingClient("ep-20251230122250-8gbc7").AsIEmbeddingGenerator();
+//
+//     var vectorStorePath = Path.Combine(AppContext.BaseDirectory, "vector-store.db");
+//     var vectorStoreConnectionString = $"Data Source={vectorStorePath}";
+//     builder.Services.AddSqliteVectorStore(_ => vectorStoreConnectionString);
+//     builder.Services.AddSqliteCollection<string, IngestedChunk>(IngestedChunk.CollectionName, vectorStoreConnectionString);
+//
+//     builder.Services.AddSingleton<DataIngestor>();
+//     builder.Services.AddSingleton<SemanticSearch>();
+//     builder.Services.AddKeyedSingleton("ingestion_directory",
+//         new DirectoryInfo(Path.Combine(builder.Environment.WebRootPath, "Data")));
+//     builder.Services.AddChatClient(chatClient).UseFunctionInvocation().UseLogging();
+//     builder.Services.AddEmbeddingGenerator(embeddingGenerator);
+// }
 
 
 var app = builder.Build();

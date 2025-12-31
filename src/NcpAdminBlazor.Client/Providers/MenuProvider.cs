@@ -28,6 +28,7 @@ public partial class MenuProvider
             {
                 products.AddLink("仪表盘", Dashboard.PageUri, Icons.Material.Outlined.Dashboard);
                 products.AddLink("Email", Email.PageUri, Icons.Material.Outlined.Email);
+                products.AddLink("AI Chat", "/chat", Icons.Material.Outlined.Chat);
             });
 
         _menuItems = builder.Items;

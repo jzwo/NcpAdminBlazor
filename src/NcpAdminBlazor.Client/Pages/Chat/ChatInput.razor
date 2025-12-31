@@ -1,0 +1,46 @@
+<div class="p-3 flex">
+    <MudTextField @bind-Value="UserMessage"
+                  Placeholder="Ask me anything..."
+                  Variant="Variant.Outlined"
+                  Adornment="Adornment.End"
+                  AdornmentIcon="@Icons.Material.Filled.Send"
+                  OnAdornmentClick="@SendMessage"
+                  OnKeyDown="@HandleKeyDown"
+                  Immediate="true"
+                  Class="grow"
+                  Lines="1"
+                  Disabled="_isSending" />
+</div>
+
+@code {
+    [Parameter] public EventCallback<string> OnSendMessage { get; set; }
+    private bool _isSending;
+
+    private string UserMessage { get; set; } = string.Empty;
+
+    private async Task SendMessage()
+    {
+        if (string.IsNullOrWhiteSpace(UserMessage))
+            return;
+
+        _isSending = true;
+
+        try
+        {
+            await OnSendMessage.InvokeAsync(UserMessage);
+            UserMessage = string.Empty;
+        }
+        finally
+        {
+            _isSending = false;
+        }
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SendMessage();
+        }
+    }
+}

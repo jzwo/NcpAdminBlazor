@@ -1,3 +1,5 @@
+using System.ClientModel;
+using System.ComponentModel;
 using System.Reflection;
 using System.Text.Json;
 using FastEndpoints;
@@ -7,6 +9,11 @@ using FastEndpoints.Swagger;
 using FluentValidation.AspNetCore;
 using Hangfire;
 using Hangfire.Redis.StackExchange;
+using Microsoft.Agents.AI;
+using Microsoft.Agents.AI.DevUI;
+using Microsoft.Agents.AI.Hosting;
+using Microsoft.Extensions.AI;
+using OpenAI.Chat;
 using Kiota.Builder;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -23,6 +30,7 @@ using NcpAdminBlazor.ApiService.Extensions;
 using NetCorePal.Extensions.CodeAnalysis;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using OpenAI;
 using Prometheus;
 using Refit;
 using Serilog;
@@ -291,6 +299,31 @@ try
 
     #endregion
 
+    #region AI Agent
+
+    var openAiApiKey = builder.Configuration["OpenAI:Key"]
+                       ?? throw new InvalidOperationException("Missing configuration:OpenAI:Key");
+    var openAiModel = builder.Configuration["OpenAI:Model"] ?? "gpt-4o-mini";
+    var openAiEndpoint = builder.Configuration["OpenAI:Endpoint"];
+    var openAiOptions = new OpenAIClientOptions();
+    if (!string.IsNullOrWhiteSpace(openAiEndpoint)) openAiOptions.Endpoint = new Uri(openAiEndpoint);
+    var chatClient = new ChatClient(openAiModel, new ApiKeyCredential(openAiApiKey), openAiOptions).AsIChatClient();
+    builder.Services.AddChatClient(chatClient);
+
+    builder.AddAIAgent("systemAssister", (sp, key) => new ChatClientAgent(
+        chatClient,
+        name: key,
+        instructions:
+        "You assist users with system-related inquiries and tasks, providing accurate and helpful information.",
+        tools: [AIFunctionFactory.Create(FormatStory)]
+    ));
+
+    // Register services for OpenAI responses and conversations (also required for DevUI)
+    builder.Services.AddOpenAIResponses();
+    builder.Services.AddOpenAIConversations();
+
+    #endregion
+
     var app = builder.Build();
 
     app.UseKnownExceptionHandler();
@@ -307,7 +340,13 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.UseSwaggerGen(); //add this
+        // Map DevUI endpoint to /devui
+        app.MapDevUI();
     }
+
+    // Map endpoints for OpenAI responses and conversations (also required for DevUI)
+    app.MapOpenAIResponses();
+    app.MapOpenAIConversations();
 
     await app.GenerateApiClientsAndExitAsync(c =>
     {
@@ -354,6 +393,13 @@ finally
 {
     await Log.CloseAndFlushAsync();
 }
+
+[Description("Formats the story for publication, revealing its title.")]
+static string FormatStory(string title, string story) => $"""
+                                                          **Title**: {title}
+
+                                                          {story}
+                                                          """;
 
 #pragma warning disable S1118
 namespace NcpAdminBlazor.ApiService

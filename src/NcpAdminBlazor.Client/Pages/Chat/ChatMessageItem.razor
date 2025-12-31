@@ -1,0 +1,62 @@
+@using Microsoft.Extensions.AI
+@using MudBlazor
+
+<div class="@RowClass">
+    @if (!IsUser)
+    {
+        <MudAvatar Size="Size.Medium" Color="Color.Default" Variant="Variant.Filled">AI</MudAvatar>
+    }
+
+    <div class="@ColumnClass">
+        <div class="@MetaRowClass">
+            @if (!IsUser)
+            {
+                <MudText Typo="Typo.caption" Class="text-gray-500">AI</MudText>
+            }
+
+            <MudText Typo="Typo.caption" Class="text-gray-400">@TimeText</MudText>
+        </div>
+
+        <MudPaper Elevation="0" Class="@BubbleClass">
+            <MudText Typo="Typo.body1" Class="whitespace-pre-wrap break-words">@MessageText</MudText>
+        </MudPaper>
+    </div>
+
+    @if (IsUser)
+    {
+        <MudAvatar Size="Size.Medium" Color="Color.Primary" Variant="Variant.Filled">U</MudAvatar>
+    }
+</div>
+
+@code {
+    [Parameter] public ChatHistoryMessage Message { get; set; } = null!;
+
+    private bool IsUser => Message.Message.Role == ChatRole.User;
+    private string TimeText => Message.CreatedAt.ToLocalTime().ToString("HH:mm");
+
+    private string RowClass => $"flex w-full items-end gap-3 {(IsUser ? "justify-end" : "justify-start")}";
+    private string ColumnClass => $"flex flex-col gap-1 {(IsUser ? "items-end" : "items-start")}";
+    private string MetaRowClass => $"flex items-center gap-2 {(IsUser ? "justify-end" : "justify-start")}";
+
+    private string BubbleClass
+        => IsUser
+            ? "px-4 py-2 rounded-2xl rounded-br-none shadow-sm max-w-2xl bg-blue-600 text-white"
+            : "px-4 py-2 rounded-2xl rounded-bl-none shadow-sm max-w-2xl bg-gray-100 dark:bg-gray-700 dark:text-gray-100";
+
+    private string MessageText
+    {
+        get
+        {
+            var chatMessage = Message.Message;
+
+            if (chatMessage.Contents is not null && chatMessage.Contents.Count > 0)
+            {
+                var text = string.Concat(chatMessage.Contents.OfType<TextContent>().Select(x => x.Text));
+                if (!string.IsNullOrWhiteSpace(text))
+                    return text;
+            }
+
+            return chatMessage.Text ?? string.Empty;
+        }
+    }
+}

@@ -7,6 +7,7 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <DockerfileContext>..\..</DockerfileContext>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <UserSecretsId>c6bafec3-7baa-4567-ae05-4d348783548d</UserSecretsId>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="AspNet.Security.OAuth.Feishu"/>
@@ -57,6 +58,16 @@
         <PackageReference Include="Aspire.StackExchange.Redis"/>
         <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL"/>
         <PackageReference Include="Aspire.RabbitMQ.Client.v7"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- AI Agent packages -->
+        <PackageReference Include="Microsoft.Agents.AI"/>
+        <PackageReference Include="Microsoft.Agents.AI.DevUI"/>
+        <PackageReference Include="Microsoft.Agents.AI.Hosting"/>
+        <PackageReference Include="Microsoft.Agents.AI.Hosting.OpenAI"/>
+        <PackageReference Include="Microsoft.Agents.AI.OpenAI"/>
+        <PackageReference Include="Microsoft.Agents.AI.Workflows"/>
     </ItemGroup>
 
     <ItemGroup>

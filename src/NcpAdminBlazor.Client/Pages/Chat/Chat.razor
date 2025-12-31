@@ -1,0 +1,70 @@
+@page "/chat"
+@using Microsoft.Extensions.AI
+@using NcpAdminBlazor.Client.HttpClientServices
+
+<PageTitle>AI Chat</PageTitle>
+
+<MudPaper Elevation="0" Class="h-full flex flex-col overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg">
+    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+        <div class="flex items-center gap-2">
+            <MudIcon Icon="@Icons.Material.Filled.SmartToy" />
+            <MudText Typo="Typo.h6">AI Assistant</MudText>
+        </div>
+        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Default" OnClick="ClearChat" />
+    </div>
+
+    <ChatMessageList Messages="_historyMessages" IsLoading="_isLoading" />
+
+    <div class="border-t border-gray-200 dark:border-gray-700">
+        <ChatInput OnSendMessage="HandleUserMessage" />
+    </div>
+</MudPaper>
+
+@code {
+    [Inject] private AiChatService AiChatService { get; set; } = null!;
+    private readonly List<ChatHistoryMessage> _historyMessages = new();
+    private bool _isLoading;
+
+    private async Task HandleUserMessage(string userText)
+    {
+        if (string.IsNullOrWhiteSpace(userText)) return;
+
+        // Add user message
+        _historyMessages.Add(new ChatHistoryMessage(new ChatMessage(ChatRole.User, userText), DateTimeOffset.Now));
+        _isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            // Prepare assistant message container
+            var responseContent = new TextContent("");
+            var assistantMessage = new ChatMessage(ChatRole.Assistant, new List<AIContent> { responseContent });
+            _historyMessages.Add(new ChatHistoryMessage(assistantMessage, DateTimeOffset.Now));
+            await foreach (var data in AiChatService.SendMessageStreamAsync(userText))
+            {
+                if (string.IsNullOrEmpty(data))
+                    continue;
+
+                responseContent.Text += data;
+
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        catch (Exception ex)
+        {
+            _historyMessages.Add(new ChatHistoryMessage(new ChatMessage(ChatRole.System, $"Error: {ex.Message}"), DateTimeOffset.Now));
+        }
+        finally
+        {
+            _isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private void ClearChat(MouseEventArgs _)
+    {
+        _historyMessages.Clear();
+        _isLoading = false;
+    }
+
+}

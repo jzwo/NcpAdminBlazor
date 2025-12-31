@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using NcpAdminBlazor.Client.Extensions;
+using NcpAdminBlazor.Client.HttpClientServices;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.Services.AddMudServices();
 
 builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddScoped<AiChatService>(sp => new AiChatService(sp.GetRequiredService<HttpClient>()));
 builder.Services.AddKiotaClient();
 
 builder.Services.AddAuthenticationAndLocalization();

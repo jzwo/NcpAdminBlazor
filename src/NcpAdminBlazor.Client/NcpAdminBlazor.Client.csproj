@@ -25,6 +25,7 @@
     <PackageReference Include="MudBlazor" />
     <PackageReference Include="MudBlazor.Translations" />
     <PackageReference Include="PodNet.Blazor.TypedRoutes" />
+    <PackageReference Include="Microsoft.Extensions.AI" />
   </ItemGroup>
 
   <ItemGroup>

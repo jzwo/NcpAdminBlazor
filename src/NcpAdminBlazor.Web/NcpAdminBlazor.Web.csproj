@@ -20,6 +20,15 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Yarp.ReverseProxy"/>
+        <!-- AI Support -->
+        <PackageReference Include="Microsoft.Extensions.AI.OpenAI" />
+        <PackageReference Include="Microsoft.Extensions.AI" />
+        <PackageReference Include="Microsoft.Extensions.DataIngestion" />
+        <PackageReference Include="Microsoft.Extensions.DataIngestion.Markdig" />
+        <PackageReference Include="PdfPig" />
+        <PackageReference Include="Microsoft.ML.Tokenizers.Data.Cl100kBase" />
+        <PackageReference Include="Microsoft.ML.Tokenizers.Data.O200kBase" />
+        <PackageReference Include="Microsoft.SemanticKernel.Connectors.SqliteVec" />
     </ItemGroup>
 
     <PropertyGroup Label="Tailwind.Hosting.Build Props">

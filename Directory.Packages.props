@@ -149,5 +149,21 @@
     <!-- Prometheus -->
     <PackageVersion Include="prometheus-net.AspNetCore" Version="8.2.1" />
     <PackageVersion Include="prometheus-net.AspNetCore.HealthChecks" Version="8.2.1" />
+    <!-- AI / Semantic Kernel -->
+    <PackageVersion Include="Microsoft.Extensions.AI" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.AI.OpenAI" Version="10.0.1-preview.1.25571.5" />
+    <PackageVersion Include="Microsoft.Extensions.DataIngestion" Version="10.0.1-preview.1.25571.5" />
+    <PackageVersion Include="Microsoft.Extensions.DataIngestion.Markdig" Version="10.0.1-preview.1.25571.5" />
+    <PackageVersion Include="Microsoft.SemanticKernel.Connectors.SqliteVec" Version="1.67.1-preview" />
+    <PackageVersion Include="Microsoft.ML.Tokenizers.Data.Cl100kBase" Version="2.0.0" />
+    <PackageVersion Include="Microsoft.ML.Tokenizers.Data.O200kBase" Version="2.0.0" />
+    <PackageVersion Include="PdfPig" Version="0.1.12" />
+    <!-- Microsoft.Agents.AI packages -->
+    <PackageVersion Include="Microsoft.Agents.AI" Version="1.0.0-preview.251219.1" />
+    <PackageVersion Include="Microsoft.Agents.AI.DevUI" Version="1.0.0-preview.251219.1" />
+    <PackageVersion Include="Microsoft.Agents.AI.Hosting" Version="1.0.0-preview.251219.1" />
+    <PackageVersion Include="Microsoft.Agents.AI.Hosting.OpenAI" Version="1.0.0-alpha.251219.1" />
+    <PackageVersion Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-preview.251219.1" />
+    <PackageVersion Include="Microsoft.Agents.AI.Workflows" Version="1.0.0-preview.251219.1" />
   </ItemGroup>
 </Project>
