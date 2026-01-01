@@ -4,20 +4,17 @@
 
 <PageTitle>AI Chat</PageTitle>
 
-<MudPaper Elevation="0" Class="h-full flex flex-col overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg">
-    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-        <div class="flex items-center gap-2">
-            <MudIcon Icon="@Icons.Material.Filled.SmartToy" />
-            <MudText Typo="Typo.h6">AI Assistant</MudText>
-        </div>
-        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Default" OnClick="ClearChat" />
-    </div>
+<MudPaper Outlined Class="h-full flex flex-col overflow-hidden">
+    <MudToolBar Dense="true">
+        <MudIcon Icon="@Icons.Material.Outlined.SmartToy" Class="mr-2" />
+        <MudText Typo="Typo.h6">AI Assistant</MudText>
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Outlined.Delete" OnClick="ClearChat" />
+    </MudToolBar>
 
     <ChatMessageList Messages="_historyMessages" IsLoading="_isLoading" />
-
-    <div class="border-t border-gray-200 dark:border-gray-700">
-        <ChatInput OnSendMessage="HandleUserMessage" />
-    </div>
+    
+    <ChatInput OnSendMessage="HandleUserMessage" />
 </MudPaper>
 
 @code {

@@ -1,47 +1,31 @@
 @using Microsoft.Extensions.AI
-@using MudBlazor
+@using MudX
 
-<div class="@RowClass">
-    @if (!IsUser)
-    {
-        <MudAvatar Size="Size.Medium" Color="Color.Default" Variant="Variant.Filled">AI</MudAvatar>
-    }
-
-    <div class="@ColumnClass">
-        <div class="@MetaRowClass">
-            @if (!IsUser)
-            {
-                <MudText Typo="Typo.caption" Class="text-gray-500">AI</MudText>
-            }
-
-            <MudText Typo="Typo.caption" Class="text-gray-400">@TimeText</MudText>
-        </div>
-
-        <MudPaper Elevation="0" Class="@BubbleClass">
-            <MudText Typo="Typo.body1" Class="whitespace-pre-wrap break-words">@MessageText</MudText>
-        </MudPaper>
-    </div>
-
-    @if (IsUser)
-    {
-        <MudAvatar Size="Size.Medium" Color="Color.Primary" Variant="Variant.Filled">U</MudAvatar>
-    }
-</div>
+<MudXChat ChatPosition="@ChatPosition" Color="@BubbleColor" Variant="Variant.Filled" Elevation="0">
+    <MudAvatar Size="Size.Medium" Color="@AvatarColor" Variant="Variant.Filled">@AvatarText</MudAvatar>
+    <MudXChatHeader Name="@DisplayName" Time="@TimeText"/>
+    <MudXChatBubble Class="max-w-2xl">
+        @if (IsUser)
+        {
+            <MudText Typo="Typo.body1" Class="whitespace-pre-wrap wrap-break-word">@MessageText</MudText>
+        }
+        else
+        {
+            <MudMarkdown Value="@MessageText"/>
+        }
+    </MudXChatBubble>
+</MudXChat>
 
 @code {
     [Parameter] public ChatHistoryMessage Message { get; set; } = null!;
 
     private bool IsUser => Message.Message.Role == ChatRole.User;
     private string TimeText => Message.CreatedAt.ToLocalTime().ToString("HH:mm");
-
-    private string RowClass => $"flex w-full items-end gap-3 {(IsUser ? "justify-end" : "justify-start")}";
-    private string ColumnClass => $"flex flex-col gap-1 {(IsUser ? "items-end" : "items-start")}";
-    private string MetaRowClass => $"flex items-center gap-2 {(IsUser ? "justify-end" : "justify-start")}";
-
-    private string BubbleClass
-        => IsUser
-            ? "px-4 py-2 rounded-2xl rounded-br-none shadow-sm max-w-2xl bg-blue-600 text-white"
-            : "px-4 py-2 rounded-2xl rounded-bl-none shadow-sm max-w-2xl bg-gray-100 dark:bg-gray-700 dark:text-gray-100";
+    private string DisplayName => IsUser ? "You" : "AI Assistant";
+    private string AvatarText => IsUser ? "U" : "AI";
+    private MudX.ChatBubblePosition ChatPosition => IsUser ? MudX.ChatBubblePosition.End : MudX.ChatBubblePosition.Start;
+    private Color AvatarColor => IsUser ? Color.Primary : Color.Default;
+    private Color BubbleColor => IsUser ? Color.Primary : Color.Default;
 
     private string MessageText
     {
@@ -49,14 +33,15 @@
         {
             var chatMessage = Message.Message;
 
-            if (chatMessage.Contents is not null && chatMessage.Contents.Count > 0)
+            if (chatMessage.Contents.Count > 0)
             {
                 var text = string.Concat(chatMessage.Contents.OfType<TextContent>().Select(x => x.Text));
                 if (!string.IsNullOrWhiteSpace(text))
                     return text;
             }
 
-            return chatMessage.Text ?? string.Empty;
+            return chatMessage.Text;
         }
     }
+
 }

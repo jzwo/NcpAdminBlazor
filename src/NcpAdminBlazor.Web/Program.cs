@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Localization;
+using MudBlazor;
 using MudBlazor.Services;
 using NcpAdminBlazor.Client.Extensions;
 using NcpAdminBlazor.Web.Components;
@@ -12,6 +13,7 @@ builder.AddServiceDefaults();
 
 // Add MudBlazor services
 builder.Services.AddMudServices();
+builder.Services.AddMudMarkdownServices();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
