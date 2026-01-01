@@ -18,7 +18,8 @@ else
             @if (InProgress)
             {
                 <MudProgressCircular Indeterminate="true" Color="Color.Primary">
-                    <MudIcon Icon="@Icons.Material.Outlined.AutoAwesome" Color="Color.Primary" Size="Size.Medium"/>
+                    <MudIcon Icon="@Icons.Material.Outlined.AutoAwesome" Color="Color.Primary"
+                             Size="Size.Medium"/>
                 </MudProgressCircular>
             }
             else
@@ -27,7 +28,13 @@ else
             }
         </div>
         <div class="max-w-4xl">
-            <MudMarkdown Value="@Message.Text"/>
+            @foreach (var content in Message.Contents)
+            {
+                if (content is TextContent { Text: { Length: > 0 } text })
+                {
+                    <MudMarkdown Value="@text"/>
+                }
+            }
         </div>
     </div>
 }

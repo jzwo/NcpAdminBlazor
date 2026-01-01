@@ -34,9 +34,9 @@
 
         // Add user message
         _messages.Add(userMessage);
-        StateHasChanged();
         var responseText = new TextContent("");
         _currentResponseMessage = new ChatMessage(ChatRole.Assistant, [responseText]);
+        StateHasChanged();
         _currentResponseCancellation = new CancellationTokenSource();
         try
         {
@@ -58,6 +58,7 @@
         }
         catch (Exception ex)
         {
+            _currentResponseMessage = null;
             _messages.Add(new ChatMessage(ChatRole.System, $"Error: {ex.Message}"));
         }
         finally
