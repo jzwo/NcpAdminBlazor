@@ -1,22 +1,38 @@
 @using Microsoft.Extensions.AI
+@inject IJSRuntime Js
 
 <div class="grow overflow-y-auto p-4 space-y-4 h-full bg-gray-50 dark:bg-transparent">
     @foreach (var message in Messages)
     {
-        <ChatMessageItem Message="message" />
+        <ChatMessageItem @key="@message" Message="@message"/>
     }
-    
-    @if (IsLoading)
+
+    @if (InProgressMessage is not null)
     {
-        <div class="flex justify-start w-full mb-4">
-            <div class="p-3 bg-gray-100 dark:bg-gray-700 rounded-2xl rounded-bl-none shadow-sm">
-                 <MudProgressCircular Size="Size.Small" Indeterminate="true" />
-            </div>
-        </div>
+        <ChatMessageItem Message="@InProgressMessage" InProgress="true"/>
+    }
+
+    @if (IsEmpty)
+    {
+        <div class="flex flex-col items-center justify-center h-full gap-4 text-gray-400">@NoMessagesContent</div>
     }
 </div>
 
 @code {
-    [Parameter] public IReadOnlyList<ChatHistoryMessage> Messages { get; set; } = Array.Empty<ChatHistoryMessage>();
-    [Parameter] public bool IsLoading { get; set; }
+    [Parameter] public IReadOnlyList<ChatMessage> Messages { get; set; } = [];
+    [Parameter] public ChatMessage? InProgressMessage { get; set; }
+
+    [Parameter] public RenderFragment? NoMessagesContent { get; set; }
+
+    private bool IsEmpty => !Messages.Any(m => (m.Role == ChatRole.User || m.Role == ChatRole.Assistant) && !string.IsNullOrEmpty(m.Text));
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Activates the auto-scrolling behavior
+            await Js.InvokeVoidAsync("import", "./Pages/Chat/ChatMessageList.razor.js");
+        }
+    }
+
 }

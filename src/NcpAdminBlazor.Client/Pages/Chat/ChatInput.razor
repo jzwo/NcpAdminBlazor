@@ -1,5 +1,6 @@
+@using Microsoft.Extensions.AI
 <div class="p-3">
-    <MudTextField @bind-Value="UserMessage"
+    <MudTextField @bind-Value="_messageText"
                   Placeholder="Ask me anything..."
                   Variant="Variant.Outlined"
                   Adornment="Adornment.End"
@@ -9,26 +10,26 @@
                   Immediate="true"
                   Class="grow"
                   Lines="1"
-                  Disabled="_isSending" />
+                  Disabled="_isSending"/>
 </div>
 
 @code {
-    [Parameter] public EventCallback<string> OnSendMessage { get; set; }
+    [Parameter] public EventCallback<ChatMessage> OnSendMessage { get; set; }
     private bool _isSending;
 
-    private string UserMessage { get; set; } = string.Empty;
+    private string _messageText = string.Empty;
 
     private async Task SendMessage()
     {
-        if (string.IsNullOrWhiteSpace(UserMessage))
+        if (string.IsNullOrWhiteSpace(_messageText))
             return;
-
         _isSending = true;
 
         try
         {
-            await OnSendMessage.InvokeAsync(UserMessage);
-            UserMessage = string.Empty;
+            await OnSendMessage.InvokeAsync(new ChatMessage(ChatRole.User, _messageText));
+
+            _messageText = string.Empty;
         }
         finally
         {
@@ -43,4 +44,5 @@
             await SendMessage();
         }
     }
+
 }

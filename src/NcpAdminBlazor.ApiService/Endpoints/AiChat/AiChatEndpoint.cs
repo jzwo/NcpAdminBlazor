@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using FastEndpoints;
 using Microsoft.Agents.AI;
+using Microsoft.Extensions.AI;
 
 namespace NcpAdminBlazor.ApiService.Endpoints.AiChat;
 
@@ -29,12 +30,12 @@ public class AiChatEndpoint([FromKeyedServices("systemAssister")] AIAgent agent)
         await Send.EventStreamAsync("update", EventStreamAsync(req.Message, ct), ct);
     }
 
-    private async IAsyncEnumerable<string> EventStreamAsync(string message,
+    private async IAsyncEnumerable<ChatResponseUpdate> EventStreamAsync(string message,
         [EnumeratorCancellation] CancellationToken ct)
     {
         await foreach (var update in agent.RunStreamingAsync(message, cancellationToken: ct))
         {
-            yield return update.Text;
+            yield return update.AsChatResponseUpdate();
         }
     }
 }

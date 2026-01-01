@@ -1,67 +1,91 @@
 @page "/chat"
 @using Microsoft.Extensions.AI
 @using NcpAdminBlazor.Client.HttpClientServices
+@implements IDisposable
 
 <PageTitle>AI Chat</PageTitle>
 
 <MudPaper Outlined Class="h-full flex flex-col overflow-hidden">
     <MudToolBar Dense="true">
-        <MudIcon Icon="@Icons.Material.Outlined.SmartToy" Class="mr-2" />
         <MudText Typo="Typo.h6">AI Assistant</MudText>
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Outlined.Delete" OnClick="ClearChat" />
+        <MudSpacer/>
+        <MudIconButton Icon="@Icons.Material.Outlined.Delete" OnClick="@ResetConversationAsync"/>
     </MudToolBar>
 
-    <ChatMessageList Messages="_historyMessages" IsLoading="_isLoading" />
-    
-    <ChatInput OnSendMessage="HandleUserMessage" />
+    <ChatMessageList Messages="_messages" InProgressMessage="_currentResponseMessage">
+        <NoMessagesContent>
+            <MudIcon Icon="@Icons.Material.Outlined.ChatBubbleOutline" Size="Size.Large"/>
+            <MudText Typo="Typo.h6">No messages yet. Start a conversation!</MudText>
+        </NoMessagesContent>
+    </ChatMessageList>
+
+    <ChatInput OnSendMessage="HandleUserMessage"/>
 </MudPaper>
 
 @code {
     [Inject] private AiChatService AiChatService { get; set; } = null!;
-    private readonly List<ChatHistoryMessage> _historyMessages = new();
-    private bool _isLoading;
+    private readonly List<ChatMessage> _messages = [];
+    private CancellationTokenSource? _currentResponseCancellation;
+    private ChatMessage? _currentResponseMessage;
 
-    private async Task HandleUserMessage(string userText)
+    private async Task HandleUserMessage(ChatMessage userMessage)
     {
-        if (string.IsNullOrWhiteSpace(userText)) return;
+        CancelAnyCurrentResponse();
 
         // Add user message
-        _historyMessages.Add(new ChatHistoryMessage(new ChatMessage(ChatRole.User, userText), DateTimeOffset.Now));
-        _isLoading = true;
+        _messages.Add(userMessage);
         StateHasChanged();
-
+        var responseText = new TextContent("");
+        _currentResponseMessage = new ChatMessage(ChatRole.Assistant, [responseText]);
+        _currentResponseCancellation = new CancellationTokenSource();
         try
         {
             // Prepare assistant message container
-            var responseContent = new TextContent("");
-            var assistantMessage = new ChatMessage(ChatRole.Assistant, new List<AIContent> { responseContent });
-            _historyMessages.Add(new ChatHistoryMessage(assistantMessage, DateTimeOffset.Now));
-            await foreach (var data in AiChatService.SendMessageStreamAsync(userText))
+            await foreach (var update in AiChatService.SendMessageStreamAsync(userMessage.Text, _currentResponseCancellation.Token))
             {
-                if (string.IsNullOrEmpty(data))
-                    continue;
+                _messages.AddMessages(update, filter: c => c is not TextContent);
 
-                responseContent.Text += data;
+                if (string.IsNullOrEmpty(update.Text))
+                    continue;
+                responseText.Text += update.Text;
+                ChatMessageItem.NotifyChanged(_currentResponseMessage);
 
                 await InvokeAsync(StateHasChanged);
             }
+
+            _messages.Add(_currentResponseMessage!);
+            _currentResponseMessage = null;
         }
         catch (Exception ex)
         {
-            _historyMessages.Add(new ChatHistoryMessage(new ChatMessage(ChatRole.System, $"Error: {ex.Message}"), DateTimeOffset.Now));
+            _messages.Add(new ChatMessage(ChatRole.System, $"Error: {ex.Message}"));
         }
         finally
         {
-            _isLoading = false;
             StateHasChanged();
         }
     }
 
-    private void ClearChat(MouseEventArgs _)
+    private void CancelAnyCurrentResponse()
     {
-        _historyMessages.Clear();
-        _isLoading = false;
+        // If a response was cancelled while streaming, include it in the conversation so it's not lost
+        if (_currentResponseMessage is not null)
+        {
+        }
+
+        _currentResponseCancellation?.Cancel();
+        _currentResponseMessage = null;
     }
+
+    private Task ResetConversationAsync()
+    {
+        CancelAnyCurrentResponse();
+        _messages.Clear();
+        return Task.CompletedTask;
+    }
+
+
+    public void Dispose()
+        => _currentResponseCancellation?.Cancel();
 
 }

@@ -1,3 +1,4 @@
+@using System.Runtime.CompilerServices
 @using Microsoft.Extensions.AI
 @using MudX
 
@@ -6,37 +7,51 @@
     <MudXChat ChatPosition="@ChatPosition" Variant="Variant.Text" Elevation="0">
         <MudXChatHeader Time="@TimeText"/>
         <MudXChatBubble Class="max-w-2xl">
-            @MessageText
+            @Message.Text
         </MudXChatBubble>
     </MudXChat>
 }
 else
 {
     <div class="flex w-full items-start gap-3 mb-4">
-        <MudAvatar Size="Size.Medium" Variant="Variant.Filled">AI</MudAvatar>
+        <div class="w-10 h-10 flex items-center justify-center shrink-0">
+            @if (InProgress)
+            {
+                <MudProgressCircular Indeterminate="true" Color="Color.Primary">
+                    <MudIcon Icon="@Icons.Material.Outlined.AutoAwesome" Color="Color.Primary" Size="Size.Medium"/>
+                </MudProgressCircular>
+            }
+            else
+            {
+                <MudIcon Icon="@Icons.Material.Outlined.AutoAwesome" Color="Color.Primary" Size="Size.Medium"/>
+            }
+        </div>
         <div class="max-w-4xl">
-            <MudMarkdown Value="@MessageText"/>
+            <MudMarkdown Value="@Message.Text"/>
         </div>
     </div>
 }
 
 @code {
-    [Parameter] public ChatHistoryMessage Message { get; set; } = null!;
+    private static readonly ConditionalWeakTable<ChatMessage, ChatMessageItem> SubscribersLookup = new();
+    [Parameter, EditorRequired] public required ChatMessage Message { get; set; }
 
-    private bool IsUser => Message.Message.Role == ChatRole.User;
-    private string TimeText => Message.CreatedAt.ToLocalTime().ToString("HH:mm");
+    [Parameter] public bool InProgress { get; set; }
+
+    private bool IsUser => Message.Role == ChatRole.User;
+    private string? TimeText => Message.CreatedAt?.ToLocalTime().ToString("HH:mm");
     private MudX.ChatBubblePosition ChatPosition => IsUser ? MudX.ChatBubblePosition.End : MudX.ChatBubblePosition.Start;
 
-    private string MessageText
+    protected override void OnInitialized()
     {
-        get
-        {
-            var chatMessage = Message.Message;
-            if (chatMessage.Contents.Count <= 0)
-                return chatMessage.Text;
+        SubscribersLookup.AddOrUpdate(Message, this);
+    }
 
-            var text = string.Concat(chatMessage.Contents.OfType<TextContent>().Select(x => x.Text));
-            return !string.IsNullOrWhiteSpace(text) ? text : chatMessage.Text;
+    public static void NotifyChanged(ChatMessage source)
+    {
+        if (SubscribersLookup.TryGetValue(source, out var subscriber))
+        {
+            subscriber.StateHasChanged();
         }
     }
 
