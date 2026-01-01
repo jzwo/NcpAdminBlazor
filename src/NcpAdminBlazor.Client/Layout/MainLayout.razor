@@ -1,10 +1,12 @@
 ﻿@inherits LayoutComponentBase
+@using MudX
 @implements IDisposable
 
 <MudThemeProvider Theme="@_theme" IsDarkMode="LayoutStore.IsDarkMode"/>
 <MudPopoverProvider/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
+<MudXProvider/>
 
 @Body
 

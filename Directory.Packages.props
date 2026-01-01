@@ -12,60 +12,60 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- Core hosting / framework extensions -->
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.1.0" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.1.0" />
     <!-- Aspire hosting & related -->
-    <PackageVersion Include="Aspire.Hosting.AppHost" Version="$(AspireVersion)" />
+    <PackageVersion Include="Aspire.Hosting.AppHost" Version="13.1.0" />
     <PackageVersion Include="Aspire.Hosting.Docker" Version="13.0.0-preview.1.25560.3" />
     <PackageVersion Include="Aspire.Hosting.Kafka" Version="$(AspireVersion)" />
     <PackageVersion Include="Aspire.Hosting.MySql" Version="$(AspireVersion)" />
-    <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="$(AspireVersion)" />
-    <PackageVersion Include="Aspire.Hosting.RabbitMQ" Version="$(AspireVersion)" />
-    <PackageVersion Include="Aspire.Hosting.Redis" Version="$(AspireVersion)" />
+    <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="13.1.0" />
+    <PackageVersion Include="Aspire.Hosting.RabbitMQ" Version="13.1.0" />
+    <PackageVersion Include="Aspire.Hosting.Redis" Version="13.1.0" />
     <PackageVersion Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="$(AspireVersion)" />
-    <PackageVersion Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="$(AspireVersion)" />
+    <PackageVersion Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="13.1.0" />
     <PackageVersion Include="Aspire.Pomelo.EntityFrameworkCore.MySql" Version="$(AspireVersion)" />
     <PackageVersion Include="Aspire.RabbitMQ.Client.v7" Version="9.5.2" />
-    <PackageVersion Include="Aspire.StackExchange.Redis" Version="$(AspireVersion)" />
+    <PackageVersion Include="Aspire.StackExchange.Redis" Version="13.1.0" />
     <PackageVersion Include="Aspire.Confluent.Kafka" Version="$(AspireVersion)" />
     <!-- Authentication / OAuth -->
     <PackageVersion Include="AspNet.Security.OAuth.Feishu" Version="10.0.0" />
     <PackageVersion Include="AspNet.Security.OAuth.Weixin" Version="10.0.0" />
     <!-- Data Protection -->
-    <PackageVersion Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="10.0.1" />
     <!-- EF Core (tools, providers) -->
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.1" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.1" />
     <PackageVersion Include="MySql.EntityFrameworkCore" Version="9.0.0" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
     <PackageVersion Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
     <PackageVersion Include="Pomelo.EntityFrameworkCore.MySql.Json.Microsoft" Version="9.0.0" />
     <!-- NetCorePal packages -->
-    <PackageVersion Include="NetCorePal.Context.AspNetCore" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Context.CAP" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Context.Shared" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Extensions.AspNetCore" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Extensions.CodeAnalysis" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Extensions.Dto" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Extensions.DistributedLocks.Redis" Version="$(NetCorePalVersion)" />
+    <PackageVersion Include="NetCorePal.Context.AspNetCore" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.Context.CAP" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.Context.Shared" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.Extensions.AspNetCore" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.Extensions.CodeAnalysis" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.Extensions.Dto" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.Extensions.DistributedLocks.Redis" Version="3.1.0" />
     <PackageVersion Include="NetCorePal.Extensions.DistributedTransactions.CAP.MySql" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Extensions.DistributedTransactions.CAP.PostgreSQL" Version="$(NetCorePalVersion)" />
+    <PackageVersion Include="NetCorePal.Extensions.DistributedTransactions.CAP.PostgreSQL" Version="3.1.0" />
     <PackageVersion Include="NetCorePal.Extensions.DistributedTransactions.CAP.SqlServer" Version="$(NetCorePalVersion)" />
     <PackageVersion Include="NetCorePal.Extensions.DistributedTransactions.CAP.Sqlite" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Extensions.Domain.Abstractions" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Extensions.Jwt.StackExchangeRedis" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Extensions.MicrosoftServiceDiscovery" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Extensions.MultiEnv" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Extensions.NewtonsoftJson" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Extensions.Primitives" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Extensions.Repository.EntityFrameworkCore" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.Extensions.Repository.EntityFrameworkCore.Snowflake" Version="$(NetCorePalVersion)" />
-    <PackageVersion Include="NetCorePal.OpenTelemetry.Diagnostics" Version="$(NetCorePalVersion)" />
+    <PackageVersion Include="NetCorePal.Extensions.Domain.Abstractions" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.Extensions.Jwt.StackExchangeRedis" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.Extensions.MicrosoftServiceDiscovery" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.Extensions.MultiEnv" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.Extensions.NewtonsoftJson" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.Extensions.Primitives" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.Extensions.Repository.EntityFrameworkCore" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.Extensions.Repository.EntityFrameworkCore.Snowflake" Version="3.1.0" />
+    <PackageVersion Include="NetCorePal.OpenTelemetry.Diagnostics" Version="3.1.0" />
     <!-- FastEndpoints stack -->
     <PackageVersion Include="FastEndpoints" Version="$(FastEndpointsVersion)" />
     <PackageVersion Include="FastEndpoints.ClientGen.Kiota" Version="$(FastEndpointsVersion)" />
@@ -107,19 +107,21 @@
     <PackageVersion Include="Refit.Newtonsoft.Json" Version="9.0.2" />
     <!-- Serilog -->
     <PackageVersion Include="Serilog.AspNetCore" Version="10.0.0" />
-    <PackageVersion Include="Serilog.Enrichers.ClientInfo" Version="2.7.0" />
+    <PackageVersion Include="Serilog.Enrichers.ClientInfo" Version="2.8.0" />
     <PackageVersion Include="Serilog.Sinks.OpenTelemetry" Version="4.2.0" />
     <!-- Blazor Components -->
-    <PackageVersion Include="Microsoft.AspNetCore.Components.Authorization" Version="10.0.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.Authorization" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.1" />
     <!-- Blazor Libraries -->
     <PackageVersion Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageVersion Include="MudBlazor" Version="8.15.0" />
     <PackageVersion Include="MudBlazor.Translations" Version="2.7.0" />
+    <PackageVersion Include="MudBlazor.Markdown" Version="8.11.0" />
+    <PackageVersion Include="MudX.MudBlazor.Extension" Version="8.15.2" />
     <PackageVersion Include="PodNet.Blazor.TypedRoutes" Version="1.0.0" />
     <!-- Kiota -->
-    <PackageVersion Include="Microsoft.Kiota.Bundle" Version="1.21.0" />
+    <PackageVersion Include="Microsoft.Kiota.Bundle" Version="1.21.1" />
     <!-- Tailwind -->
     <PackageVersion Include="Tailwind.Hosting" Version="1.2.4" />
     <PackageVersion Include="Tailwind.Hosting.Build" Version="1.2.4" />
@@ -150,14 +152,14 @@
     <PackageVersion Include="prometheus-net.AspNetCore" Version="8.2.1" />
     <PackageVersion Include="prometheus-net.AspNetCore.HealthChecks" Version="8.2.1" />
     <!-- AI / Semantic Kernel -->
-    <PackageVersion Include="Microsoft.Extensions.AI" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.AI" Version="10.1.1" />
     <PackageVersion Include="Microsoft.Extensions.AI.OpenAI" Version="10.0.1-preview.1.25571.5" />
     <PackageVersion Include="Microsoft.Extensions.DataIngestion" Version="10.0.1-preview.1.25571.5" />
     <PackageVersion Include="Microsoft.Extensions.DataIngestion.Markdig" Version="10.0.1-preview.1.25571.5" />
     <PackageVersion Include="Microsoft.SemanticKernel.Connectors.SqliteVec" Version="1.67.1-preview" />
     <PackageVersion Include="Microsoft.ML.Tokenizers.Data.Cl100kBase" Version="2.0.0" />
     <PackageVersion Include="Microsoft.ML.Tokenizers.Data.O200kBase" Version="2.0.0" />
-    <PackageVersion Include="PdfPig" Version="0.1.12" />
+    <PackageVersion Include="PdfPig" Version="0.1.13" />
     <!-- Microsoft.Agents.AI packages -->
     <PackageVersion Include="Microsoft.Agents.AI" Version="1.0.0-preview.251219.1" />
     <PackageVersion Include="Microsoft.Agents.AI.DevUI" Version="1.0.0-preview.251219.1" />

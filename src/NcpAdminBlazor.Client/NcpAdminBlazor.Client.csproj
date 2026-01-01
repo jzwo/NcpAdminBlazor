@@ -23,7 +23,9 @@
     <PackageReference Include="Microsoft.Extensions.Http" />
     <PackageReference Include="Microsoft.Kiota.Bundle" />
     <PackageReference Include="MudBlazor" />
+    <PackageReference Include="MudBlazor.Markdown" />
     <PackageReference Include="MudBlazor.Translations" />
+    <PackageReference Include="MudX.MudBlazor.Extension" />
     <PackageReference Include="PodNet.Blazor.TypedRoutes" />
     <PackageReference Include="Microsoft.Extensions.AI" />
   </ItemGroup>
