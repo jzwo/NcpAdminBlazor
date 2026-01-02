@@ -119,5 +119,151 @@
   </resheader>
   <data name="Hello, world!" xml:space="preserve">
     <value>你好，世界！</value>
+  </data>  <data name="TotalRevenue" xml:space="preserve">
+    <value>总收入</value>
+  </data>
+  <data name="ActiveUsers" xml:space="preserve">
+    <value>活跃用户</value>
+  </data>
+  <data name="TotalOrders" xml:space="preserve">
+    <value>订单总数</value>
+  </data>
+  <data name="CustomerSatisfaction" xml:space="preserve">
+    <value>客户满意度</value>
+  </data>
+  <data name="SalesTrend" xml:space="preserve">
+    <value>销售趋势</value>
+  </data>
+  <data name="ProductDistribution" xml:space="preserve">
+    <value>产品分布</value>
+  </data>
+  <data name="TeamPerformance" xml:space="preserve">
+    <value>团队绩效</value>
+  </data>
+  <data name="ThisMonth" xml:space="preserve">
+    <value>本月</value>
+  </data>
+  <data name="RecentActivities" xml:space="preserve">
+    <value>最新活动</value>
+  </data>
+  <data name="ViewAll" xml:space="preserve">
+    <value>查看全部</value>
+  </data>
+  <data name="QuickActions" xml:space="preserve">
+    <value>快速操作</value>
+  </data>
+  <data name="CreateOrder" xml:space="preserve">
+    <value>新建订单</value>
+  </data>
+  <data name="AddCustomer" xml:space="preserve">
+    <value>添加客户</value>
+  </data>
+  <data name="GenerateReport" xml:space="preserve">
+    <value>生成报表</value>
+  </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>发送消息</value>
+  </data>
+  <data name="SystemSettings" xml:space="preserve">
+    <value>系统设置</value>
+  </data>
+  <data name="HelpCenter" xml:space="preserve">
+    <value>帮助中心</value>
+  </data>
+  <data name="January" xml:space="preserve">
+    <value>一月</value>
+  </data>
+  <data name="February" xml:space="preserve">
+    <value>二月</value>
+  </data>
+  <data name="March" xml:space="preserve">
+    <value>三月</value>
+  </data>
+  <data name="April" xml:space="preserve">
+    <value>四月</value>
+  </data>
+  <data name="May" xml:space="preserve">
+    <value>五月</value>
+  </data>
+  <data name="June" xml:space="preserve">
+    <value>六月</value>
+  </data>
+  <data name="Electronics" xml:space="preserve">
+    <value>电子产品</value>
+  </data>
+  <data name="Clothing" xml:space="preserve">
+    <value>服装</value>
+  </data>
+  <data name="Food" xml:space="preserve">
+    <value>食品</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>其他</value>
+  </data>
+  <data name="Sales" xml:space="preserve">
+    <value>销售额</value>
+  </data>
+  <data name="Profit" xml:space="preserve">
+    <value>利润</value>
+  </data>
+  <data name="ZhangSan" xml:space="preserve">
+    <value>张三</value>
+  </data>
+  <data name="LiSi" xml:space="preserve">
+    <value>李四</value>
+  </data>
+  <data name="WangWu" xml:space="preserve">
+    <value>王五</value>
+  </data>
+  <data name="ZhaoLiu" xml:space="preserve">
+    <value>赵六</value>
+  </data>
+  <data name="ProjectManager" xml:space="preserve">
+    <value>项目经理</value>
+  </data>
+  <data name="FrontendDeveloper" xml:space="preserve">
+    <value>前端开发</value>
+  </data>
+  <data name="BackendDeveloper" xml:space="preserve">
+    <value>后端开发</value>
+  </data>
+  <data name="UIDesigner" xml:space="preserve">
+    <value>UI设计师</value>
+  </data>
+  <data name="NewOrder" xml:space="preserve">
+    <value>新订单 #2847</value>
+  </data>
+  <data name="NewOrderDesc" xml:space="preserve">
+    <value>客户张三下了一个新订单</value>
+  </data>
+  <data name="NewUserRegistration" xml:space="preserve">
+    <value>新用户注册</value>
+  </data>
+  <data name="NewUserDesc" xml:space="preserve">
+    <value>李四完成了账户注册</value>
+  </data>
+  <data name="PaymentReceived" xml:space="preserve">
+    <value>收到付款</value>
+  </data>
+  <data name="PaymentDesc" xml:space="preserve">
+    <value>订单 #2845 已支付</value>
+  </data>
+  <data name="SystemNotification" xml:space="preserve">
+    <value>系统通知</value>
+  </data>
+  <data name="SystemNotificationDesc" xml:space="preserve">
+    <value>服务器负载较高，请注意监控</value>
+  </data>
+  <data name="MinutesAgo" xml:space="preserve">
+    <value>{0}分钟前</value>
+  </data>
+  <data name="HoursAgo" xml:space="preserve">
+    <value>{0}小时前</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>新</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>首页</value>
   </data>
 </root>

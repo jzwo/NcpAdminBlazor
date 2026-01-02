@@ -1,61 +1,341 @@
 ﻿@page "/"
 @inject IStringLocalizer<Home> L
 
-<PageTitle>Home</PageTitle>
-<h1>Render @(OperatingSystem.IsBrowser() ? "Wasm" : "Server")</h1>
+<PageTitle>@L["Home"]</PageTitle>
 
-<MudText Typo="Typo.h3" GutterBottom="true">@L["Hello, world!"]</MudText>
-<MudText Class="mb-8">Welcome to your new app, powered by MudBlazor and the .NET 9 Template!</MudText>
+<MudGrid Spacing="4">
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Outlined="true">
+            <MudCardContent>
+                <div class="d-flex justify-space-between align-center">
+                    <div>
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary">@L["TotalRevenue"]</MudText>
+                        <MudText Typo="Typo.h5" Class="mt-2">¥3,125,000</MudText>
+                        <MudText Typo="Typo.caption" Color="Color.Success">
+                            <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Size="Size.Small"/>
+                            +12.5%
+                        </MudText>
+                    </div>
+                    <MudAvatar Color="Color.Primary" Size="Size.Large">
+                        <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Size="Size.Large"/>
+                    </MudAvatar>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
 
-<MudAlert Severity="Severity.Normal" ContentAlignment="HorizontalAlignment.Start">
-    You can find documentation and examples on our website here:
-    <MudLink Href="https://mudblazor.com" Target="_blank" Typo="Typo.body2" Color="Color.Primary">
-        <b>www.mudblazor.com</b>
-    </MudLink>
-</MudAlert>
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Outlined="true">
+            <MudCardContent>
+                <div class="d-flex justify-space-between align-center">
+                    <div>
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary">@L["ActiveUsers"]</MudText>
+                        <MudText Typo="Typo.h5" Class="mt-2">8,524</MudText>
+                        <MudText Typo="Typo.caption" Color="Color.Success">
+                            <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Size="Size.Small"/>
+                            +8.3%
+                        </MudText>
+                    </div>
+                    <MudAvatar Color="Color.Secondary" Size="Size.Large">
+                        <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Large"/>
+                    </MudAvatar>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
 
-<br />
-<MudText Typo="Typo.h5" GutterBottom="true">Interactivity in this Template</MudText>
-<br />
-<MudText Typo="Typo.body2">
-    When you opt for the "Global" Interactivity Location, <br />
-    the render modes are defined in App.razor and consequently apply to all child components.<br />
-    In this case, providers are globally set in the MainLayout.<br />
-    <br />
-    On the other hand, if you choose the "Per page/component" Interactivity Location,<br />
-    it is necessary to include the <br />
-    <br />
-    &lt;MudPopoverProvider /&gt; <br />
-    &lt;MudDialogProvider /&gt; <br />
-    &lt;MudSnackbarProvider /&gt; <br />
-    <br />
-    components on every interactive page.<br />
-    <br />
-    If a render mode is not specified for a page, it defaults to Server-Side Rendering (SSR),<br />
-    similar to this page. While MudBlazor allows pages to be rendered in SSR,<br />
-    please note that interactive features, such as buttons and dropdown menus, will not be functional.
-</MudText>
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Outlined="true">
+            <MudCardContent>
+                <div class="d-flex justify-space-between align-center">
+                    <div>
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary">@L["TotalOrders"]</MudText>
+                        <MudText Typo="Typo.h5" Class="mt-2">2,847</MudText>
+                        <MudText Typo="Typo.caption" Color="Color.Error">
+                            <MudIcon Icon="@Icons.Material.Filled.TrendingDown" Size="Size.Small"/>
+                            -3.2%
+                        </MudText>
+                    </div>
+                    <MudAvatar Color="Color.Tertiary" Size="Size.Large">
+                        <MudIcon Icon="@Icons.Material.Filled.ShoppingCart" Size="Size.Large"/>
+                    </MudAvatar>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
 
-<br />
-<MudText Typo="Typo.h5" GutterBottom="true">What's New in Blazor with the Release of .NET 9</MudText>
-<br />
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Outlined="true">
+            <MudCardContent>
+                <div class="d-flex justify-space-between align-center">
+                    <div>
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary">@L["CustomerSatisfaction"]</MudText>
+                        <MudText Typo="Typo.h5" Class="mt-2">96.8%</MudText>
+                        <MudText Typo="Typo.caption" Color="Color.Success">
+                            <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Size="Size.Small"/>
+                            +2.1%
+                        </MudText>
+                    </div>
+                    <MudAvatar Color="Color.Success" Size="Size.Large">
+                        <MudIcon Icon="@Icons.Material.Filled.Star" Size="Size.Large"/>
+                    </MudAvatar>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
 
-<MudText Typo="Typo.h6" GutterBottom="true">Prerendering</MudText>
-<MudText Typo="Typo.body2" GutterBottom="true">
-    If you're exploring the features of .NET 9 Blazor,<br /> you might be pleasantly surprised to learn that each page is prerendered on the server,<br /> regardless of the selected render mode.<br /><br />
-    This means that you'll need to inject all necessary services on the server,<br /> even when opting for the wasm (WebAssembly) render mode.<br /><br />
-    This prerendering functionality is crucial to ensuring that WebAssembly mode feels fast and responsive,<br /> especially when it comes to initial page load times.<br /><br />
-    For more information on how to detect prerendering and leverage the RenderContext, you can refer to the following link:
-    <MudLink Href="https://github.com/dotnet/aspnetcore/issues/51468#issuecomment-1783568121" Target="_blank" Typo="Typo.body2" Color="Color.Primary">
-        More details
-    </MudLink>
-</MudText>
+    <MudItem xs="12" md="8">
+        <MudCard Outlined="true">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@L["SalesTrend"]</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Default"/>
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudChart ChartType="ChartType.Line"
+                          ChartSeries="@_salesSeries"
+                          XAxisLabels="@_xLabels"
+                          Width="100%"
+                          Height="350px"
+                          ChartOptions="@_chartOptions"/>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
 
-<br />
-<MudText Typo="Typo.h6" GutterBottom="true">InteractiveAuto</MudText>
-<MudText Typo="Typo.body2">
-    A discussion on how to achieve this can be found here:
-    <MudLink Href="https://github.com/dotnet/aspnetcore/issues/51468#issue-1950424116" Target="_blank" Typo="Typo.body2" Color="Color.Primary">
-        More details
-    </MudLink>
-</MudText>
+    <MudItem xs="12" md="4">
+        <MudCard Outlined="true">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@L["ProductDistribution"]</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Default"/>
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudChart ChartType="ChartType.Donut"
+                          InputData="@_productData"
+                          InputLabels="@_productLabels"
+                          Width="100%"
+                          Height="350px"/>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <!-- 团队绩效 -->
+    <MudItem xs="12" md="6">
+        <MudCard Outlined="true">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@L["TeamPerformance"]</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudChip T="string" Size="Size.Small" Color="Color.Info">@L["ThisMonth"]</MudChip>
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardContent Class="pa-0">
+                <MudList T="string" Dense="true">
+                    @foreach (var member in _teamMembers)
+                    {
+                        <MudListItem T="string">
+                            <div class="d-flex flex-column pa-3">
+                                <div class="d-flex justify-space-between align-center mb-2">
+                                    <div class="d-flex align-center gap-3">
+                                        <MudAvatar Color="@member.AvatarColor" Size="Size.Medium">
+                                            @member.Name[0]
+                                        </MudAvatar>
+                                        <div>
+                                            <MudText Typo="Typo.subtitle2">@member.Name</MudText>
+                                            <MudText Typo="Typo.caption"
+                                                     Class="mud-text-secondary">@member.Role</MudText>
+                                        </div>
+                                    </div>
+                                    <MudText Typo="Typo.subtitle2"
+                                             Color="@member.PerformanceColor">@member.Performance%
+                                    </MudText>
+                                </div>
+                                <MudProgressLinear Color="@member.PerformanceColor"
+                                                   Value="@member.Performance"
+                                                   Size="Size.Small"
+                                                   Rounded="true"/>
+                            </div>
+                        </MudListItem>
+                        <MudDivider/>
+                    }
+                </MudList>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" md="6">
+        <MudCard Outlined="true">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@L["RecentActivities"]</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary" Size="Size.Small">@L["ViewAll"]</MudButton>
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardContent Class="pa-0">
+                <MudList T="string" Dense="true">
+                    @foreach (var activity in _recentActivities)
+                    {
+                        <MudListItem T="string">
+                            <div class="d-flex align-start pa-3 gap-3">
+                                <MudAvatar Color="@activity.IconColor" Size="Size.Medium" Rounded="true">
+                                    <MudIcon Icon="@activity.Icon"/>
+                                </MudAvatar>
+                                <div class="grow">
+                                    <MudText Typo="Typo.subtitle2">@activity.Title</MudText>
+                                    <MudText Typo="Typo.body2"
+                                             Class="mud-text-secondary">@activity.Description</MudText>
+                                    <MudText Typo="Typo.caption" Class="mud-text-secondary mt-1">
+                                        <MudIcon Icon="@Icons.Material.Filled.AccessTime"
+                                                 Size="Size.Small"/> @activity.Time
+                                    </MudText>
+                                </div>
+                                @if (activity.Badge != null)
+                                {
+                                    <MudChip T="string" Size="Size.Small"
+                                             Color="@activity.BadgeColor">@activity.Badge</MudChip>
+                                }
+                            </div>
+                        </MudListItem>
+                        <MudDivider/>
+                    }
+                </MudList>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12">
+        <MudCard Outlined="true">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@L["QuickActions"]</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudGrid Spacing="3">
+                    <MudItem xs="6" sm="4" md="2">
+                        <MudPaper Class="pa-4 text-center cursor-pointer hover:mud-elevation-8" Elevation="0"
+                                  Outlined="true">
+                            <MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" Size="Size.Large"/>
+                            <MudText Typo="Typo.body2" Class="mt-2">@L["CreateOrder"]</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="6" sm="4" md="2">
+                        <MudPaper Class="pa-4 text-center cursor-pointer hover:mud-elevation-8" Elevation="0"
+                                  Outlined="true">
+                            <MudIcon Icon="@Icons.Material.Filled.PersonAdd" Color="Color.Secondary" Size="Size.Large"/>
+                            <MudText Typo="Typo.body2" Class="mt-2">@L["AddCustomer"]</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="6" sm="4" md="2">
+                        <MudPaper Class="pa-4 text-center cursor-pointer hover:mud-elevation-8" Elevation="0"
+                                  Outlined="true">
+                            <MudIcon Icon="@Icons.Material.Filled.Description" Color="Color.Tertiary"
+                                     Size="Size.Large"/>
+                            <MudText Typo="Typo.body2" Class="mt-2">@L["GenerateReport"]</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="6" sm="4" md="2">
+                        <MudPaper Class="pa-4 text-center cursor-pointer hover:mud-elevation-8" Elevation="0"
+                                  Outlined="true">
+                            <MudIcon Icon="@Icons.Material.Filled.Email" Color="Color.Info" Size="Size.Large"/>
+                            <MudText Typo="Typo.body2" Class="mt-2">@L["SendMessage"]</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="6" sm="4" md="2">
+                        <MudPaper Class="pa-4 text-center cursor-pointer hover:mud-elevation-8" Elevation="0"
+                                  Outlined="true">
+                            <MudIcon Icon="@Icons.Material.Filled.Settings" Color="Color.Warning" Size="Size.Large"/>
+                            <MudText Typo="Typo.body2" Class="mt-2">@L["SystemSettings"]</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="6" sm="4" md="2">
+                        <MudPaper Class="pa-4 text-center cursor-pointer hover:mud-elevation-8" Elevation="0"
+                                  Outlined="true">
+                            <MudIcon Icon="@Icons.Material.Filled.HelpOutline" Color="Color.Default" Size="Size.Large"/>
+                            <MudText Typo="Typo.body2" Class="mt-2">@L["HelpCenter"]</MudText>
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private string[] _xLabels = [];
+    private List<ChartSeries> _salesSeries = new();
+    private readonly double[] _productData = [25, 35, 20, 20];
+    private string[] _productLabels = [];
+
+    private readonly ChartOptions _chartOptions = new()
+    {
+        YAxisTicks = 20000,
+        MaxNumYAxisTicks = 10,
+        YAxisLines = true,
+        XAxisLines = false
+    };
+
+    private TeamMember[] _teamMembers = [];
+
+    private Activity[] _recentActivities = [];
+
+    protected override Task OnInitializedAsync()
+    {
+        _xLabels = [L["January"], L["February"], L["March"], L["April"], L["May"], L["June"]];
+        _productLabels = [L["Electronics"], L["Clothing"], L["Food"], L["Others"]];
+
+        _salesSeries =
+        [
+            new() { Name = L["Sales"], Data = [42000, 53000, 48000, 62000, 71000, 68000] },
+            new() { Name = L["Profit"], Data = [18000, 24000, 21000, 28000, 32000, 30000] }
+        ];
+
+        _teamMembers =
+        [
+            new TeamMember { Name = L["ZhangSan"], Role = L["ProjectManager"], Performance = 95, AvatarColor = Color.Primary, PerformanceColor = Color.Success },
+            new TeamMember { Name = L["LiSi"], Role = L["FrontendDeveloper"], Performance = 88, AvatarColor = Color.Secondary, PerformanceColor = Color.Success },
+            new TeamMember { Name = L["WangWu"], Role = L["BackendDeveloper"], Performance = 92, AvatarColor = Color.Tertiary, PerformanceColor = Color.Success },
+            new TeamMember { Name = L["ZhaoLiu"], Role = L["UIDesigner"], Performance = 78, AvatarColor = Color.Info, PerformanceColor = Color.Warning }
+        ];
+
+        _recentActivities =
+        [
+            new Activity { Icon = Icons.Material.Filled.ShoppingCart, IconColor = Color.Primary, Title = L["NewOrder"], Description = L["NewOrderDesc"], Time = string.Format(L["MinutesAgo"], 5), Badge = L["New"], BadgeColor = Color.Success },
+            new Activity { Icon = Icons.Material.Filled.Person, IconColor = Color.Secondary, Title = L["NewUserRegistration"], Description = L["NewUserDesc"], Time = string.Format(L["MinutesAgo"], 15), Badge = null, BadgeColor = Color.Default },
+            new Activity { Icon = Icons.Material.Filled.AttachMoney, IconColor = Color.Success, Title = L["PaymentReceived"], Description = L["PaymentDesc"], Time = string.Format(L["HoursAgo"], 1), Badge = "¥1,280", BadgeColor = Color.Info },
+            new Activity { Icon = Icons.Material.Filled.Notifications, IconColor = Color.Warning, Title = L["SystemNotification"], Description = L["SystemNotificationDesc"], Time = string.Format(L["HoursAgo"], 2), Badge = null, BadgeColor = Color.Default }
+        ];
+
+        return Task.CompletedTask;
+    }
+
+    class TeamMember
+    {
+        public string Name { get; init; } = string.Empty;
+        public string Role { get; init; } = string.Empty;
+        public double Performance { get; init; }
+        public Color AvatarColor { get; init; }
+        public Color PerformanceColor { get; init; }
+    }
+
+    class Activity
+    {
+        public string Icon { get; init; } = string.Empty;
+        public Color IconColor { get; init; }
+        public string Title { get; init; } = string.Empty;
+        public string Description { get; init; } = string.Empty;
+        public string Time { get; init; } = string.Empty;
+        public string? Badge { get; init; }
+        public Color BadgeColor { get; init; }
+    }
+
+}
