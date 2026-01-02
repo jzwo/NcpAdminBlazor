@@ -43,8 +43,6 @@
             // Prepare assistant message container
             await foreach (var update in AiChatService.SendMessageStreamAsync(userMessage.Text, _currentResponseCancellation.Token))
             {
-                _messages.AddMessages(update, filter: c => c is not TextContent);
-
                 if (string.IsNullOrEmpty(update.Text))
                     continue;
                 responseText.Text += update.Text;
