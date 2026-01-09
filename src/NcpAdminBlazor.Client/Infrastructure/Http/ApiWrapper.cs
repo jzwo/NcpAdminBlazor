@@ -1,13 +1,12 @@
 using MudBlazor;
 
-namespace NcpAdminBlazor.Client.Kiota;
+namespace NcpAdminBlazor.Client.Infrastructure.Http;
 
 public class ApiWrapper(ApiClient apiClient, ILogger<ApiWrapper> logger, ISnackbar snackbar)
 {
     public async Task<bool> HandleCallAsync<TResponse>(
         Func<ApiClient, Task<TResponse?>> apiCall,
-        Action<TResponse>? onSuccess = null,
-        CancellationToken cancellationToken = default) where TResponse : NetCorePalExtensionsDtoResponseData
+        Action<TResponse>? onSuccess = null) where TResponse : NetCorePalExtensionsDtoResponseData
     {
         TResponse? response;
         try

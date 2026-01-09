@@ -1,4 +1,4 @@
-namespace NcpAdminBlazor.Web.Auth;
+namespace NcpAdminBlazor.Web.Infrastructure.Auth;
 
 public record UserTokenData(
     string UserId,

@@ -5,13 +5,15 @@ using Microsoft.Kiota.Abstractions.Authentication;
 using MudBlazor;
 using MudBlazor.Services;
 using NcpAdminBlazor.Client.Extensions;
+using NcpAdminBlazor.Client.Infrastructure.ApiProxies;
 using NcpAdminBlazor.Web.Components;
 using NcpAdminBlazor.Web.Endpoints;
 using NcpAdminBlazor.Web.Extensions;
-using NcpAdminBlazor.Client.HttpClientServices;
-using NcpAdminBlazor.Client.Services.Abstract;
+using NcpAdminBlazor.Client.Services;
+using NcpAdminBlazor.Client.Shared;
 using NcpAdminBlazor.Web;
-using NcpAdminBlazor.Web.Auth;
+using NcpAdminBlazor.Web.Infrastructure.Http;
+using NcpAdminBlazor.Web.Middleware;
 using NcpAdminBlazor.Web.Options;
 using NcpAdminBlazor.Web.Services;
 using Yarp.ReverseProxy.Transforms;
@@ -47,13 +49,25 @@ builder.Services.AddScoped<ICookieAuthService, JsCookieAuthService>();
 
 const string apiServiceAddress = "https+http://apiservice";
 
+// 注册服务端 HTTP 消息处理器
+builder.Services.AddScoped<ServerUnauthorizedHandler>();
+
 // 添加 Kiota API 客户端
-builder.Services.AddKiotaClient(apiServiceAddress, services =>
-{
-    services.AddScoped<IAccessTokenProvider, KiotaAccessTokenProvider>();
-    services.AddScoped<BaseBearerTokenAuthenticationProvider>();
-    services.AddScoped<IAuthenticationProvider, BearerTokenAuthenticationProvider>();
-});
+builder.Services.AddKiotaClient(
+    apiServiceAddress,
+    services =>
+    {
+        services.AddScoped<IAccessTokenProvider, KiotaAccessTokenProvider>();
+        services.AddScoped<BaseBearerTokenAuthenticationProvider>();
+        services.AddScoped<IAuthenticationProvider, BearerTokenAuthenticationProvider>();
+    },
+    clientBuilder =>
+    {
+        // 挂载服务端 401 未授权处理器
+        // 用于在 Blazor Server 交互模式下处理 API 401 响应
+        // 注意：YARP 转发的请求由 TokenCleanupMiddleware 处理
+        clientBuilder.AddHttpMessageHandler<ServerUnauthorizedHandler>();
+    });
 
 builder.Services.AddHttpClient<AiChatService>(client => { client.BaseAddress = new Uri(apiServiceAddress); });
 
@@ -87,6 +101,7 @@ app.UseHttpsRedirection();
 app.UseAntiforgery();
 
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.UseOutputCache();
@@ -111,6 +126,9 @@ app.MapDefaultEndpoints();
 // 映射认证端点
 app.MapAuthEndpoints();
 
+// 【Token 清理中间件】在认证之后，YARP之前
+// 用于处理 401 响应，自动清除过期的 Token 和 Cookie
+app.UseMiddleware<TokenCleanupMiddleware>();
 // 映射 API 转发
 app.MapForwarder("/api/{**catch-all}", apiServiceAddress, transformBuilder =>
         {

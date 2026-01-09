@@ -3,7 +3,7 @@ using Microsoft.Kiota.Abstractions;
 using Microsoft.Kiota.Abstractions.Authentication;
 using NcpAdminBlazor.Web.Options;
 
-namespace NcpAdminBlazor.Web.Auth;
+namespace NcpAdminBlazor.Web.Infrastructure.Http;
 
 /// <summary>
 /// Bearer Token 认证提供器

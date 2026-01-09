@@ -1,6 +1,6 @@
 using Microsoft.JSInterop;
 using NcpAdminBlazor.Client.Services;
-using NcpAdminBlazor.Client.Services.Abstract;
+using NcpAdminBlazor.Client.Shared;
 
 namespace NcpAdminBlazor.Web.Services;
 
@@ -22,7 +22,7 @@ public sealed class JsCookieAuthService(
 
     /// <inheritdoc />
     public async Task<bool> SetAuthCookieAsync(
-        SetAuthCookieRequest snapshot,
+        SetAuthCookieRequest request,
         CancellationToken cancellationToken = default)
     {
         try
@@ -31,11 +31,11 @@ public sealed class JsCookieAuthService(
             return await module.InvokeAsync<bool>(
                 SetAuthCookieFunction,
                 cancellationToken,
-                snapshot.AccessToken,
-                snapshot.RefreshToken,
-                snapshot.AccessTokenExpiry.ToString("O"),
-                snapshot.RefreshTokenExpiry.ToString("O"),
-                snapshot.UserId);
+                request.AccessToken,
+                request.RefreshToken,
+                request.AccessTokenExpiry.ToString("O"),
+                request.RefreshTokenExpiry.ToString("O"),
+                request.UserId);
         }
         catch (JSException ex)
         {

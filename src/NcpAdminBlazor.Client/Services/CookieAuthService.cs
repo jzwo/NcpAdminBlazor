@@ -1,5 +1,5 @@
 using System.Net.Http.Json;
-using NcpAdminBlazor.Client.Services.Abstract;
+using NcpAdminBlazor.Client.Shared;
 
 namespace NcpAdminBlazor.Client.Services;
 
@@ -13,12 +13,12 @@ public sealed class CookieAuthService(HttpClient httpClient) : ICookieAuthServic
     private const string LogoutEndpoint = "/bff-api/auth/logout";
 
     public async Task<bool> SetAuthCookieAsync(
-        SetAuthCookieRequest snapshot,
+        SetAuthCookieRequest request,
         CancellationToken cancellationToken = default)
     {
         try
         {
-            var response = await httpClient.PostAsJsonAsync(LoginEndpoint, snapshot, cancellationToken);
+            var response = await httpClient.PostAsJsonAsync(LoginEndpoint, request, cancellationToken);
             return response.IsSuccessStatusCode;
         }
         catch (HttpRequestException)
@@ -41,12 +41,3 @@ public sealed class CookieAuthService(HttpClient httpClient) : ICookieAuthServic
     }
 }
 
-/// <summary>
-/// 设置认证 Cookie 的请求模型
-/// </summary>
-public record SetAuthCookieRequest(
-    string AccessToken,
-    string RefreshToken,
-    DateTimeOffset AccessTokenExpiry,
-    DateTimeOffset RefreshTokenExpiry,
-    string UserId);

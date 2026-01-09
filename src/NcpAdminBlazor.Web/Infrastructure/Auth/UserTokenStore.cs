@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using System.Security.Claims;
 using Microsoft.Extensions.Caching.Hybrid;
 
-namespace NcpAdminBlazor.Web.Auth;
+namespace NcpAdminBlazor.Web.Infrastructure.Auth;
 
 /// <summary>
 /// 用户令牌存储接口

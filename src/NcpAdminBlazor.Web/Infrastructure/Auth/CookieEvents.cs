@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace NcpAdminBlazor.Web.Auth;
+namespace NcpAdminBlazor.Web.Infrastructure.Auth;
 
 public class CookieEvents(IUserTokenStore store) : CookieAuthenticationEvents
 {

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using NcpAdminBlazor.Web.Auth;
+using NcpAdminBlazor.Web.Infrastructure.Auth;
 
 namespace NcpAdminBlazor.Web.Extensions;
 

@@ -2,8 +2,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using NcpAdminBlazor.Client.Services;
-using NcpAdminBlazor.Web.Auth;
+using NcpAdminBlazor.Client.Shared;
+using NcpAdminBlazor.Web.Infrastructure.Auth;
 
 namespace NcpAdminBlazor.Web.Endpoints;
 

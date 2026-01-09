@@ -353,7 +353,7 @@ try
     {
         c.SwaggerDocumentName = "v1"; //must match doc name above
         c.Language = GenerationLanguage.CSharp;
-        c.OutputPath = "../NcpAdminBlazor.Client/HttpClient";
+        c.OutputPath = "../NcpAdminBlazor.Client/GeneratedHttpClient";
         c.ClientNamespaceName = "NcpAdminBlazor.Client";
         c.ClientClassName = "ApiClient";
         // c.CreateZipArchive = true; //if you'd like a zip file as well

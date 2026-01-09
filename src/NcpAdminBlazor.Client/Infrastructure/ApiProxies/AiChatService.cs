@@ -1,9 +1,9 @@
+using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using System.Net.ServerSentEvents;
 using Microsoft.Extensions.AI;
 
-namespace NcpAdminBlazor.Client.HttpClientServices;
+namespace NcpAdminBlazor.Client.Infrastructure.ApiProxies;
 
 /// <summary>
 /// AI 聊天服务

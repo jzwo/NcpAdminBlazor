@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Kiota.Abstractions.Authentication;
+using NcpAdminBlazor.Web.Infrastructure.Auth;
 
-namespace NcpAdminBlazor.Web.Auth;
+namespace NcpAdminBlazor.Web.Infrastructure.Http;
 
 /// <summary>
 /// Kiota Access Token 提供器

@@ -1,7 +1,7 @@
 using NcpAdminBlazor.Client;
 using NcpAdminBlazor.Client.Models;
 
-namespace NcpAdminBlazor.Web.Auth;
+namespace NcpAdminBlazor.Web.Infrastructure.Auth;
 
 /// <summary>
 /// 用户令牌刷新服务接口

@@ -1,5 +1,6 @@
 @page "/account/login"
-@using NcpAdminBlazor.Client.Services.Abstract
+@using NcpAdminBlazor.Client.Infrastructure.Http
+@using NcpAdminBlazor.Client.Shared
 
 <MudForm @ref="_form" @bind-Errors="@_errors">
     <MudText Typo="Typo.h4" GutterBottom="true" Class="mt-4">Sign In</MudText>
@@ -73,7 +74,7 @@
 
         try
         {
-            NcpAdminBlazorApiServiceAspNetCoreMyTokenResponse? tokenData = null;
+            NcpAdminBlazorApiServiceAuthMyTokenResponse? tokenData = null;
             var loginSucceeded = await ApiWrapper.HandleCallAsync(
                 apiClient => apiClient.Api.Auth.Login.PostAsync(
                     new NcpAdminBlazorApiServiceEndpointsAuthenticationLoginRequest()

@@ -1,7 +1,7 @@
 using Microsoft.Kiota.Abstractions.Authentication;
 using Microsoft.Kiota.Http.HttpClientLibrary;
 
-namespace NcpAdminBlazor.Client.Kiota;
+namespace NcpAdminBlazor.Client.Infrastructure.Http;
 
 /// <summary>
 /// API 客户端工厂，负责创建 ApiClient 实例
