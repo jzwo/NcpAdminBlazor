@@ -80,7 +80,7 @@
         }
 
         var registered = await ApiWrapper.HandleCallAsync(
-            apiClient => apiClient.Api.User.Create.PostAsync(new NcpAdminBlazorApiServiceEndpointsUsersManagementRegisterUserRequest
+            apiClient => apiClient.Api.Auth.Create.PostAsync(new NcpAdminBlazorApiServiceEndpointsAuthenticationRegisterUserRequest()
             {
                 Username = _model.Username,
                 Password = _model.Password

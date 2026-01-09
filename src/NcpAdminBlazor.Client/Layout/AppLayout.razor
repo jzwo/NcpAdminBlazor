@@ -1,5 +1,6 @@
 @using MudBlazor.Utilities
 @using NcpAdminBlazor.Client.Pages.Authentication
+@using NcpAdminBlazor.Client.Services.Abstract
 
 @layout MainLayout
 @inherits LayoutComponentBase
@@ -69,7 +70,7 @@
 
 @code {
     [CascadingParameter] private RouteData? RouteData { get; set; }
-    [Inject] TokenAuthenticationStateProvider AuthStateProvider { get; set; } = null!;
+    [Inject] ICookieAuthService CookieAuthService { get; set; } = null!;
     [Inject] NavigationManager NavigationManager { get; set; } = null!;
     [Inject] BreadcrumbService BreadcrumbService { get; set; } = null!;
     [Inject] LayoutStore LayoutStore { get; set; } = null!;
@@ -165,8 +166,12 @@
 
     async Task Logout()
     {
-        await AuthStateProvider.LogoutAsync();
-        NavigationManager.NavigateTo(Login.PageUri);
+
+        // 清除服务端 Cookie
+        await CookieAuthService.ClearAuthCookieAsync();
+        
+        // 强制页面重新加载以应用 Cookie 清除
+        NavigationManager.NavigateTo(Login.PageUri, forceLoad: true);
     }
 
 

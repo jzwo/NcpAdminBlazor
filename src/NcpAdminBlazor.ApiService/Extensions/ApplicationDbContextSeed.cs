@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NcpAdminBlazor.Domain.AggregatesModel.RoleAggregate;
 using NcpAdminBlazor.Domain.AggregatesModel.UserAggregate;
+using NcpAdminBlazor.Infrastructure.Utils;
 using NcpAdminBlazor.Shared.Auth;
 
 namespace NcpAdminBlazor.ApiService.Extensions;
@@ -11,9 +12,9 @@ public static class ApplicationDbContextSeed
     {
         using var scope = services.CreateScope();
         var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>()
-            .CreateLogger("ApplicationDbContextSeed");
+            .CreateLogger(nameof(ApplicationDbContextSeed));
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
+        var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
         try
         {
             if (!await context.Roles.AnyAsync(cancellationToken))
@@ -33,7 +34,7 @@ public static class ApplicationDbContextSeed
 
                 var adminUser = new User(
                     username: "admin",
-                    password: "admin123456",
+                    passwordHash: passwordHasher.HashPassword("admin123456"),
                     realName: "system administrator",
                     email: "admin@example.com",
                     phone: "13800000000",
@@ -46,7 +47,6 @@ public static class ApplicationDbContextSeed
         catch (Exception ex)
         {
             logger.LogError(ex, "An error occurred while seeding the database.");
-            throw;
         }
     }
 }

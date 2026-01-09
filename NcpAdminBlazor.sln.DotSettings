@@ -886,4 +886,5 @@ sealed class $epName$Endpoint : Endpoint&lt;$epName$Request, $epName$Response&gt
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FDE43092B97B5F45996AF67E4BAB0B34/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FDE43092B97B5F45996AF67E4BAB0B34/Scope/=C3001E7C0DA78E4487072B7E050D86C5/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FDE43092B97B5F45996AF67E4BAB0B34/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Kiota/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Postgre/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

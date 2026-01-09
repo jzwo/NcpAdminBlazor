@@ -21,10 +21,10 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
-using NcpAdminBlazor.ApiService.AspNetCore;
-using NcpAdminBlazor.ApiService.AspNetCore.Middlewares;
-using NcpAdminBlazor.ApiService.AspNetCore.ApiKey;
-using NcpAdminBlazor.ApiService.AspNetCore.Permission;
+using NcpAdminBlazor.ApiService.Auth;
+using NcpAdminBlazor.ApiService.Auth.Middlewares;
+using NcpAdminBlazor.ApiService.Auth.Permission;
+using NcpAdminBlazor.ApiService.Auth.ApiKey;
 using NcpAdminBlazor.ApiService.Clients;
 using NcpAdminBlazor.ApiService.Extensions;
 using NetCorePal.Extensions.CodeAnalysis;
@@ -250,6 +250,7 @@ try
         x.UseDashboard(); //CAP Dashboard  path：  /cap
     });
 
+    builder.Services.AddUtilsInfrastructure();
     #endregion
 
     builder.Services.AddMediatR(cfg =>

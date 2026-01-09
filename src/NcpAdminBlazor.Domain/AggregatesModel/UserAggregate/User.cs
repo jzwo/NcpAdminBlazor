@@ -1,7 +1,6 @@
 ﻿using NcpAdminBlazor.Domain.AggregatesModel.RoleAggregate;
 using NcpAdminBlazor.Domain.Common;
 using NcpAdminBlazor.Domain.DomainEvents;
-using static NcpAdminBlazor.Domain.Common.PasswordHasher;
 
 namespace NcpAdminBlazor.Domain.AggregatesModel.UserAggregate
 {
@@ -16,7 +15,6 @@ namespace NcpAdminBlazor.Domain.AggregatesModel.UserAggregate
         public string Username { get; private set; } = string.Empty;
         public string Phone { get; private set; } = string.Empty;
         public string PasswordHash { get; private set; } = string.Empty;
-        public string PasswordSalt { get; private set; } = string.Empty;
         public string RealName { get; private set; } = string.Empty;
         public string Email { get; private set; } = string.Empty;
         public ICollection<RoleId> AssignedRoleIds { get; private set; } = [];
@@ -28,7 +26,7 @@ namespace NcpAdminBlazor.Domain.AggregatesModel.UserAggregate
 
         public User(
             string username,
-            string password,
+            string passwordHash,
             string realName,
             string email,
             string phone,
@@ -39,9 +37,6 @@ namespace NcpAdminBlazor.Domain.AggregatesModel.UserAggregate
             RealName = realName;
             Email = email;
             Phone = phone;
-            var salt = GeneratePasswordSalt();
-            var passwordHash = GeneratePasswordHash(password, salt);
-            PasswordSalt = salt;
             PasswordHash = passwordHash;
             AssignedRoleIds = assignedRoleIds;
             AddDomainEvent(new UserCreatedDomainEvent(this));
@@ -58,22 +53,16 @@ namespace NcpAdminBlazor.Domain.AggregatesModel.UserAggregate
             AddDomainEvent(new UserInfoUpdatedDomainEvent(this));
         }
 
-        public void ChangePassword(string oldPassword, string newPassword)
+        public void ChangePassword(string newPasswordHash)
         {
-            var oldPasswordHash = GeneratePasswordHash(oldPassword, PasswordSalt);
-            if (PasswordHash != oldPasswordHash) throw new KnownException("旧密码不正确");
-            var newPasswordHash = GeneratePasswordHash(newPassword, PasswordSalt);
-            if (PasswordHash == newPasswordHash) throw new KnownException("新密码不能与旧密码相同");
+            if (PasswordHash == newPasswordHash)
+                throw new KnownException("新密码不能与旧密码相同");
             PasswordHash = newPasswordHash;
             AddDomainEvent(new UserPasswordChangedDomainEvent(this));
         }
 
-        public void Login(string password)
+        public void Login()
         {
-            if (IsDeleted) throw new KnownException("用户名或密码不正确");
-            var passwordHash = GeneratePasswordHash(password, PasswordSalt);
-            if (PasswordHash != passwordHash) throw new KnownException("用户名或密码不正确");
-
             AddDomainEvent(new UserLoginDomainEvent(this));
         }
 

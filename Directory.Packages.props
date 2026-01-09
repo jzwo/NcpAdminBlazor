@@ -12,9 +12,12 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- Core hosting / framework extensions -->
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="10.1.0" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.1.0" />
+    <PackageVersion Include="Microsoft.Extensions.Identity.Core" Version="10.0.1" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.1.0" />
     <!-- Aspire hosting & related -->
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="13.1.0" />
@@ -41,6 +44,7 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery.Yarp" Version="10.1.0" />
     <PackageVersion Include="MySql.EntityFrameworkCore" Version="9.0.0" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
     <PackageVersion Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />

@@ -14,6 +14,8 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" />
+        <PackageReference Include="Microsoft.Extensions.ServiceDiscovery.Yarp" />
         <PackageReference Include="Tailwind.Hosting"/>
         <PackageReference Include="Tailwind.Hosting.Build">
             <PrivateAssets>all</PrivateAssets>

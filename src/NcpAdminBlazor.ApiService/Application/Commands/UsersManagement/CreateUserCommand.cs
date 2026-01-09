@@ -2,6 +2,7 @@ using NcpAdminBlazor.Domain.AggregatesModel.RoleAggregate;
 using NcpAdminBlazor.Domain.AggregatesModel.UserAggregate;
 using NcpAdminBlazor.Infrastructure.Repositories;
 using NcpAdminBlazor.ApiService.Application.Queries.UsersManagement;
+using NcpAdminBlazor.Infrastructure.Utils;
 
 namespace NcpAdminBlazor.ApiService.Application.Commands.UsersManagement;
 
@@ -46,18 +47,21 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     }
 }
 
-public class CreateUserCommandHandler(IUserRepository userRepository)
+public class CreateUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher)
     : ICommandHandler<CreateUserCommand, UserId>
 {
     public async Task<UserId> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
+        var hashedPassword = passwordHasher.HashPassword(request.Password);
         var user = new User(
-            request.Username,
-            request.Password,
-            request.RealName,
-            request.Email,
-            request.Phone,
-            request.RoleIds);
+            username: request.Username,
+            passwordHash: hashedPassword,
+            realName: request.RealName,
+            email: request.Email,
+            phone: request.Phone,
+            assignedRoleIds: request.RoleIds
+        );
+
         await userRepository.AddAsync(user, cancellationToken);
         return user.Id;
     }

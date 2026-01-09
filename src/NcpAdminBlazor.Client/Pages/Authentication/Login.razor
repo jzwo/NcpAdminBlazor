@@ -1,4 +1,5 @@
 @page "/account/login"
+@using NcpAdminBlazor.Client.Services.Abstract
 
 <MudForm @ref="_form" @bind-Errors="@_errors">
     <MudText Typo="Typo.h4" GutterBottom="true" Class="mt-4">Sign In</MudText>
@@ -45,7 +46,7 @@
 @code {
     [Inject] ApiWrapper ApiWrapper { get; set; } = null!;
     [Inject] NavigationManager NavigationManager { get; set; } = null!;
-    [Inject] TokenAuthenticationStateProvider AuthStateProvider { get; set; } = null!;
+    [Inject] ICookieAuthService CookieAuthService { get; set; } = null!;
     [Inject] ISnackbar Snackbar { get; set; } = null!;
     [SupplyParameterFromQuery] private string? ReturnUrl { get; set; }
     MudForm _form = null!;
@@ -74,34 +75,48 @@
         {
             NcpAdminBlazorApiServiceAspNetCoreMyTokenResponse? tokenData = null;
             var loginSucceeded = await ApiWrapper.HandleCallAsync(
-                apiClient => apiClient.Api.User.Login.PostAsync(
-                    new NcpAdminBlazorApiServiceEndpointsUsersManagementLoginRequest
+                apiClient => apiClient.Api.Auth.Login.PostAsync(
+                    new NcpAdminBlazorApiServiceEndpointsAuthenticationLoginRequest()
                     {
                         Username = _model.LoginName,
                         Password = _model.Password
-                    },
-                    requestConfiguration => requestConfiguration.Options.Add(new AllowAnonymousRequestOption())),
+                    }),
                 response => tokenData = response.Data);
 
             if (loginSucceeded && tokenData is
                 {
                     AccessToken: { } accessToken,
-                    RefreshToken: { } refreshToken
+                    RefreshToken: { } refreshToken,
+                    AccessTokenExpiry: { } accessTokenExpiry,
+                    RefreshTokenExpiry: { } refreshTokenExpiry,
+                    UserId: { } userId
                 })
             {
-                await AuthStateProvider.LoginAsync(new TokenStorageSnapshot(
+                var tokenSnapshot = new SetAuthCookieRequest(
                     accessToken,
                     refreshToken,
-                    tokenData.AccessTokenExpiry,
-                    tokenData.RefreshTokenExpiry,
-                    tokenData.UserId ?? string.Empty));
+                    accessTokenExpiry,
+                    refreshTokenExpiry,
+                    userId);
 
-                NavigationManager.NavigateTo(ReturnUrl ?? "/");
-                Snackbar.Add("登录成功！", Severity.Success, configure =>
+                // 将 Token 设置到服务端 Cookie
+                var cookieSet = await CookieAuthService.SetAuthCookieAsync(tokenSnapshot);
+
+                if (cookieSet)
                 {
-                    configure.SnackbarVariant = Variant.Text;
-                    configure.ShowCloseIcon = true;
-                });
+                    Snackbar.Add("登录成功！", Severity.Success, configure =>
+                    {
+                        configure.SnackbarVariant = Variant.Text;
+                        configure.ShowCloseIcon = true;
+                    });
+
+                    // 强制页面重新加载以应用 Cookie 认证
+                    NavigationManager.NavigateTo(ReturnUrl ?? "/", forceLoad: true);
+                }
+                else
+                {
+                    Snackbar.Add("登录失败，请重试", Severity.Error);
+                }
             }
         }
         finally

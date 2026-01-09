@@ -31,11 +31,6 @@ internal sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<Use
             .HasMaxLength(256)
             .HasComment("密码哈希");
 
-        builder.Property(user => user.PasswordSalt)
-            .IsRequired()
-            .HasMaxLength(256)
-            .HasComment("密码盐值");
-
         builder.Property(user => user.RealName)
             .IsRequired()
             .HasMaxLength(50)

@@ -1,5 +1,6 @@
 using NcpAdminBlazor.Domain.AggregatesModel.UserAggregate;
 using NcpAdminBlazor.Infrastructure.Repositories;
+using NcpAdminBlazor.Infrastructure.Utils;
 
 namespace NcpAdminBlazor.ApiService.Application.Commands.UsersManagement;
 
@@ -23,7 +24,8 @@ public class ChangePasswordCommandValidator : AbstractValidator<ChangePasswordCo
 }
 
 public class ChangePasswordCommandHandler(
-    IUserRepository userRepository)
+    IUserRepository userRepository,
+    IPasswordHasher passwordHasher)
     : ICommandHandler<ChangePasswordCommand>
 {
     public async Task Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
@@ -31,6 +33,13 @@ public class ChangePasswordCommandHandler(
         var user = await userRepository.GetAsync(request.UserId, cancellationToken)
                    ?? throw new KnownException($"用户不存在，UserId = {request.UserId}");
 
-        user.ChangePassword(request.OldPassword, request.NewPassword);
+        var verified = passwordHasher.VerifyHashedPassword(user.PasswordHash, request.OldPassword);
+        if (!verified)
+        {
+            throw new KnownException("旧密码不正确");
+        }
+
+        var newHashedPassword = passwordHasher.HashPassword(request.NewPassword);
+        user.ChangePassword(newHashedPassword);
     }
 }

@@ -17,7 +17,7 @@ namespace NcpAdminBlazor.MigrationService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.0")
+                .HasAnnotation("ProductVersion", "10.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -143,12 +143,6 @@ namespace NcpAdminBlazor.MigrationService.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)")
                         .HasComment("密码哈希");
-
-                    b.Property<string>("PasswordSalt")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasComment("密码盐值");
 
                     b.Property<string>("Phone")
                         .IsRequired()

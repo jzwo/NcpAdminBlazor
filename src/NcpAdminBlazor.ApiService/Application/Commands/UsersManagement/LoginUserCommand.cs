@@ -1,5 +1,6 @@
 using NcpAdminBlazor.Domain.AggregatesModel.UserAggregate;
 using NcpAdminBlazor.Infrastructure.Repositories;
+using NcpAdminBlazor.Infrastructure.Utils;
 
 namespace NcpAdminBlazor.ApiService.Application.Commands.UsersManagement;
 
@@ -18,13 +19,21 @@ public class LoginUserCommandValidator : AbstractValidator<LoginUserCommand>
 }
 
 public class LoginUserCommandHandler(
-    IUserRepository userRepository)
+    IUserRepository userRepository,
+    IPasswordHasher passwordHasher)
     : ICommandHandler<LoginUserCommand>
 {
     public async Task Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
         var user = await userRepository.GetAsync(request.UserId, cancellationToken) ??
                    throw new KnownException("用户不存在");
-        user.Login(request.Password);
+
+        var verified = passwordHasher.VerifyHashedPassword(user.PasswordHash, request.Password);
+        if (!verified)
+        {
+            throw new KnownException("用户名或密码错误");
+        }
+
+        user.Login();
     }
 }

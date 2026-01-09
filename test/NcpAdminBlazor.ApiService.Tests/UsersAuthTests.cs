@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using FastEndpoints.Security;
 using NcpAdminBlazor.Domain.AggregatesModel.UserAggregate;
 using NcpAdminBlazor.ApiService.Application.Queries.UsersManagement;
+using NcpAdminBlazor.ApiService.Endpoints.Authentication;
 using NcpAdminBlazor.ApiService.Endpoints.UsersManagement;
 using NcpAdminBlazor.ApiService.Tests.Fixtures;
 

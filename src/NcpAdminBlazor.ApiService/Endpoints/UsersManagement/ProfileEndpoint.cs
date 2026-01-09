@@ -1,6 +1,6 @@
 using FastEndpoints;
 using NcpAdminBlazor.ApiService.Application.Queries.UsersManagement;
-using NcpAdminBlazor.ApiService.AspNetCore;
+using NcpAdminBlazor.ApiService.Auth;
 
 namespace NcpAdminBlazor.ApiService.Endpoints.UsersManagement;
 

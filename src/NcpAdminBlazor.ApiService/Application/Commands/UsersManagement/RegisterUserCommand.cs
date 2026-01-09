@@ -1,6 +1,7 @@
 using NcpAdminBlazor.Domain.AggregatesModel.UserAggregate;
 using NcpAdminBlazor.Infrastructure.Repositories;
 using NcpAdminBlazor.ApiService.Application.Queries.UsersManagement;
+using NcpAdminBlazor.Infrastructure.Utils;
 
 namespace NcpAdminBlazor.ApiService.Application.Commands.UsersManagement;
 
@@ -28,18 +29,20 @@ public class RegisterUserCommandValidator : AbstractValidator<RegisterUserComman
 }
 
 public class RegisterUserCommandHandler(
-    IUserRepository userRepository)
+    IUserRepository userRepository,
+    IPasswordHasher passwordHasher)
     : ICommandHandler<RegisterUserCommand, UserId>
 {
     public async Task<UserId> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
+        var hashedPassword = passwordHasher.HashPassword(request.Password);
         var user = new User(
             username: request.Username,
-            password: request.Password,
-            string.Empty,
-            string.Empty,
-            string.Empty,
-            []
+            passwordHash: hashedPassword,
+            realName: string.Empty,
+            email: string.Empty,
+            phone: string.Empty,
+            assignedRoleIds: []
         );
 
         await userRepository.AddAsync(user, cancellationToken);
